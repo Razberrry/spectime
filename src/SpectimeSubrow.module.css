@@ -1,0 +1,7 @@
+.subrow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 2.5rem;
+}

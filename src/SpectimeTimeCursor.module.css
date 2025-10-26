@@ -1,0 +1,6 @@
+.cursor {
+  width: 2px;
+  background: linear-gradient(180deg, #f472b6, #22d3ee);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.7);
+}

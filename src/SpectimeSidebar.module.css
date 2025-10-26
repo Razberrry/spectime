@@ -1,0 +1,16 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 1rem;
+  color: #e0e7ff;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
