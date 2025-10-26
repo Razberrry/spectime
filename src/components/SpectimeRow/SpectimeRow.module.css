@@ -1,10 +1,9 @@
 .wrapper {
-  margin-bottom: 1rem;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(59, 130, 246, 0.45);
-  background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.2), rgba(15, 23, 42, 0.85));
+  background: rgba(255,255,255,0.1);
   backdrop-filter: blur(12px);
+  min-height: 33%;
+  border-radius:18px;
+  margin:15px 0px;
 }
 
 .sidebar {
@@ -15,4 +14,5 @@
   padding: 0.75rem;
   background: rgba(15, 23, 42, 0.55);
   border-left: 1px solid rgba(99, 102, 241, 0.35);
+    height: 200px;
 }

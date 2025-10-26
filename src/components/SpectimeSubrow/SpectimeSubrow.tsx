@@ -11,9 +11,5 @@ export const SpectimeSubrow: React.FC<SpectimeSubrowProps> = ({ classes, childre
     subrow: clsx(styles.subrow, classes?.subrow),
   };
 
-  return (
-    <Subrow classes={mergedClasses}>
-      {children}
-    </Subrow>
-  );
+  return <Subrow classes={mergedClasses}>{children}</Subrow>;
 };

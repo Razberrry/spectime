@@ -1,4 +1,4 @@
-import { addMinutes, endOfDay, startOfDay, subMinutes } from 'date-fns';
+import { addMinutes, parseISO, subMinutes } from 'date-fns';
 import { useState } from 'react';
 import {
   RangeToolbar,
@@ -8,35 +8,35 @@ import {
   TimelineContextProvider,
   useTimeline,
 } from 'chronon-timeline';
-import { SpectimeTimeline } from './spectimeTimeline';
+import { SpectimeTimeline } from './components/SpectimeTimeline/SpectimeTimeline';
 
 const DEFAULT_RANGE_HOUR: Range = {
   start: subMinutes(new Date(), 30).getTime(),
   end: addMinutes(new Date(), 30).getTime(),
 };
 
-const DEFAULT_ROWS = generateRows(3);
-const DEFAULT_ITEMS = generateItems(
-  1000,
-  {
-    start: startOfDay(new Date(Date.now() - 10 * 86400000)).getTime(),
-    end: endOfDay(new Date(Date.now() + 20 * 86400000)).getTime(),
-  },
-  DEFAULT_ROWS,
-);
-
-const App = () => {
+function App() {
   const [range, setRange] = useState<Range>(DEFAULT_RANGE_HOUR);
 
-  const [rows] = useState(DEFAULT_ROWS);
-  const [items] = useState(DEFAULT_ITEMS);
+  const [rows] = useState(generateRows(3));
+  const [items] = useState(
+    generateItems(
+      10000,
+      {
+        start: parseISO('2020-10-26').getTime(),
+        end: parseISO('2025-12-26').getTime(),
+      },
+      rows,
+    ),
+  );
   const timelineAttributes = useTimeline({ range, onRangeChanged: setRange });
+
   return (
     <TimelineContextProvider {...timelineAttributes}>
       <RangeToolbar setRange={setRange} />
       <SpectimeTimeline items={items} rows={rows} />
     </TimelineContextProvider>
   );
-};
+}
 
 export default App;
