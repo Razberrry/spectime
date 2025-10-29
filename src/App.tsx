@@ -1,4 +1,4 @@
-import { addMinutes, parseISO, subMinutes } from 'date-fns';
+import { addMinutes, hoursToMilliseconds, parseISO, subMinutes } from 'date-fns';
 import { useState } from 'react';
 import {
   RangeToolbar,
@@ -15,28 +15,31 @@ const DEFAULT_RANGE_HOUR: Range = {
   end: addMinutes(new Date(), 30).getTime(),
 };
 
-function App() {
+const ROWS = generateRows(2);
+
+const ITEMS = generateItems(
+  50_0000,
+  {
+    start: parseISO('2020-10-26').getTime(),
+    end: parseISO('2025-12-26').getTime(),
+  },
+  ROWS,
+  {
+    minDuration: hoursToMilliseconds(5),
+    maxDuration: hoursToMilliseconds(15),
+  },
+);
+
+const App = () => {
   const [range, setRange] = useState<Range>(DEFAULT_RANGE_HOUR);
 
-  const [rows] = useState(generateRows(3));
-  const [items] = useState(
-    generateItems(
-      10000,
-      {
-        start: parseISO('2020-10-26').getTime(),
-        end: parseISO('2025-12-26').getTime(),
-      },
-      rows,
-    ),
-  );
   const timelineAttributes = useTimeline({ range, onRangeChanged: setRange });
-
   return (
     <TimelineContextProvider {...timelineAttributes}>
       <RangeToolbar setRange={setRange} />
-      <SpectimeTimeline items={items} rows={rows} />
+      <SpectimeTimeline items={ITEMS} rows={ROWS} />
     </TimelineContextProvider>
   );
-}
+};
 
 export default App;

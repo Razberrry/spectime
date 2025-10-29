@@ -1,0 +1,11 @@
+.text {
+  flex: 1;
+  min-width: fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+  margin: 0;
+  font-size: 16px;
+  padding: 12px 0px;
+}

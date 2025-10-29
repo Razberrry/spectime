@@ -1,10 +1,8 @@
 import {
-  groupItemsToSubrows,
-  HOUR_AXIS_MARKERS,
+  buildVisibleRowSubrows,
+  groupItemsByRowSorted,
   ItemDefinition,
   RowDefinition,
-  Sidebar,
-  TIME_AXIS_MARKERS,
   useTimelineBehavior,
   useTimelineContext,
 } from 'chronon-timeline';
@@ -15,6 +13,18 @@ import { SpectimeRow } from '../SpectimeRow/SpectimeRow';
 import { SpectimeSubrow } from '../SpectimeSubrow/SpectimeSubrow';
 import { SpectimeTimeCursor } from '../SpectimeTimeCursor/SpectimeTimeCursor';
 import { SpectimeTimeAxis } from '../SpectimeTimeAxis/SpectimeTimeAxis';
+import reactLogo from '../../assets/react.svg';
+import { SpectimeIcon } from '../SpectimeIcon/SpectimeIcon';
+import { SpectimeText } from '../SpectimeText/SpectimeText';
+import { SpectimeItemRedMarker } from '../SpectimeItemRedMarker/SpectimeRedMarker';
+import { SpectimeRowsContainer } from '../SpectimeRowsCotainer/SpectimeRowsCotainer';
+import { SpectimeSidebar } from '../SpectimeSidebar/SpectimeSidebar';
+
+import styles from './SpectimeTimeline.module.css';
+import {
+  HOUR_AXIS_MARKERS,
+  TIME_AXIS_MARKERS,
+} from '../SpectimeTimeAxis/spectimeAxisItemDefinitions';
 
 export interface TimelineProps {
   rows: RowDefinition[];
@@ -29,45 +39,40 @@ export interface TimelineProps {
 export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
   const { range } = useTimelineContext();
   useTimelineBehavior();
-  const groupedSubrows = useMemo(() => groupItemsToSubrows(items), [items]);
 
-  const visibleSubrows = useMemo(() => {
-    const next: Record<string, ItemDefinition[][]> = {};
+  const sortedItemsByRow = useMemo(() => groupItemsByRowSorted(items), [items]);
 
-    Object.entries(groupedSubrows).forEach(([rowId, subrows]) => {
-      const filtered = subrows
-        .map((subrow) =>
-          subrow.filter((item) => item.span.start < range.end && item.span.end > range.start),
-        )
-        .filter((subrow) => subrow.length > 0);
-
-      if (filtered.length) {
-        next[rowId] = filtered;
-      }
-    });
-
-    return next;
-  }, [groupedSubrows, range]);
+  const groupedSubrows = useMemo(
+    () => buildVisibleRowSubrows(sortedItemsByRow, range),
+    [sortedItemsByRow, range],
+  );
   const now = new Date();
 
   return (
-    <SpectimeTimelineContainer>
+    <SpectimeTimelineContainer className={styles.spectimeTimelineContainer}>
       <SpectimeTimeCursor at={now} />
       <SpectimeTimeAxis timeAxisMarkers={HOUR_AXIS_MARKERS} />
       <SpectimeTimeAxis timeAxisMarkers={TIME_AXIS_MARKERS} />
-      {rows.map((row) => (
-        <SpectimeRow id={row.id} key={row.id} sidebar={<Sidebar row={row} />}>
-          {visibleSubrows[row.id]?.map((subrow, index) => (
-            <SpectimeSubrow key={`${row.id}-${index}`}>
-              {subrow.map((item) => (
-                <SpectimeItem id={item.id} key={item.id} span={item.span}>
-                  גזרת שדרה {item.id}
-                </SpectimeItem>
-              ))}
-            </SpectimeSubrow>
-          ))}
-        </SpectimeRow>
-      ))}
+      <SpectimeRowsContainer>
+        {rows.map((row) => (
+          <SpectimeRow id={row.id} key={row.id} sidebar={<SpectimeSidebar row={row} />}>
+            {groupedSubrows[row.id]?.map((subrow, index) => (
+              <SpectimeSubrow key={`${row.id}-${index}`}>
+                {subrow.map((item) => {
+                  return (
+                    <SpectimeItem id={item.id} key={item.id} span={item.span}>
+                      <SpectimeItemRedMarker />
+                      <SpectimeIcon src={reactLogo} alt="lol" />
+                      <SpectimeText>גזרת שדרה {item.id}</SpectimeText>
+                      <SpectimeIcon src={reactLogo} alt="lol" />
+                    </SpectimeItem>
+                  );
+                })}
+              </SpectimeSubrow>
+            ))}
+          </SpectimeRow>
+        ))}
+      </SpectimeRowsContainer>
     </SpectimeTimelineContainer>
   );
 };

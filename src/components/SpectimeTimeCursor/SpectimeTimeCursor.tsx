@@ -6,7 +6,10 @@ import styles from './SpectimeTimeCursor.module.css';
 
 export type SpectimeTimeCursorProps = TimeCursorProps;
 
-export const SpectimeTimeCursor: React.FC<SpectimeTimeCursorProps> = ({ classes, ...cursorProps }) => {
+export const SpectimeTimeCursor: React.FC<SpectimeTimeCursorProps> = ({
+  classes,
+  ...cursorProps
+}) => {
   const mergedClasses: TimelineCursorClasses = {
     cursor: clsx(styles.cursor, classes?.cursor),
   };

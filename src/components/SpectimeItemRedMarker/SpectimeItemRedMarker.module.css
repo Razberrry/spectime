@@ -1,0 +1,13 @@
+.marker {
+  min-width: 10px;
+  max-width: 10px;
+  background-color: rgb(245, 74, 74);
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+@container spectime-item (max-width: 32px) {
+  .marker {
+    display: none;
+  }
+}

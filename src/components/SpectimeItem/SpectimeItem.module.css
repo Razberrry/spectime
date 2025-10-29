@@ -1,9 +1,9 @@
-
-
 .innerContainer {
-  border: 2px solid black;
-  width: 100%;
-  overflow: hidden;
-  color:aqua
-
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.27);
+      border-radius: 12px;
+      overflow: hidden;
+      align-items: center;
+      color: white;
+      gap: 8px;
 }
