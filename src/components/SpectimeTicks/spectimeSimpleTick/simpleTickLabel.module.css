@@ -1,0 +1,16 @@
+.labelContainer {
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+
+.line {
+  margin-top: 12px;
+  width: 2px;
+  height: 4px;
+  background-color: currentColor;
+  opacity: 0.5;
+}

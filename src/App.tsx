@@ -1,4 +1,4 @@
-import { addMinutes, hoursToMilliseconds, parseISO, subMinutes } from 'date-fns';
+import { addHours, addMinutes, parseISO, subHours, subMinutes } from 'date-fns';
 import { useState } from 'react';
 import {
   RangeToolbar,
@@ -8,32 +8,41 @@ import {
   TimelineContextProvider,
   useTimeline,
 } from 'chronon-timeline';
-import { SpectimeTimeline } from './components/SpectimeTimeline/SpectimeTimeline';
-
+import { SpectimeTimeline } from './components/SpectimeTimeline/spectimeTimeline';
 const DEFAULT_RANGE_HOUR: Range = {
-  start: subMinutes(new Date(), 30).getTime(),
-  end: addMinutes(new Date(), 30).getTime(),
+  start: subHours(new Date(), 12).getTime(),
+  end: addHours(new Date(), 12).getTime(),
 };
 
 const ROWS = generateRows(2);
 
 const ITEMS = generateItems(
-  50_0000,
+  5000,
   {
-    start: parseISO('2020-10-26').getTime(),
-    end: parseISO('2025-12-26').getTime(),
+    start: parseISO('2024-10-01').getTime(),
+    end: parseISO('2025-11-01').getTime(),
   },
   ROWS,
-  {
-    minDuration: hoursToMilliseconds(5),
-    maxDuration: hoursToMilliseconds(15),
-  },
 );
+
+console.log(parseISO('2024-09-23'));
+
+// [
+//           {
+//             id: '3',
+//             rowId: 'row-0',
+//             span: {
+//               start: new Date(new Date().setHours(14, 0, 0)).getTime(),
+//               end: new Date(new Date().setHours(15, 0, 0)).getTime(),
+//             },
+//           },
+//         ]
 
 const App = () => {
   const [range, setRange] = useState<Range>(DEFAULT_RANGE_HOUR);
+  // const debouncedRange = useDeferredValue(range);
 
-  const timelineAttributes = useTimeline({ range, onRangeChanged: setRange });
+  const timelineAttributes = useTimeline({ range: range, onRangeChanged: setRange });
   return (
     <TimelineContextProvider {...timelineAttributes}>
       <RangeToolbar setRange={setRange} />

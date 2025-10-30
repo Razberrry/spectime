@@ -18,13 +18,10 @@ import { SpectimeIcon } from '../SpectimeIcon/SpectimeIcon';
 import { SpectimeText } from '../SpectimeText/SpectimeText';
 import { SpectimeItemRedMarker } from '../SpectimeItemRedMarker/SpectimeRedMarker';
 import { SpectimeRowsContainer } from '../SpectimeRowsCotainer/SpectimeRowsCotainer';
-import { SpectimeSidebar } from '../SpectimeSidebar/SpectimeSidebar';
 
 import styles from './SpectimeTimeline.module.css';
-import {
-  HOUR_AXIS_MARKERS,
-  TIME_AXIS_MARKERS,
-} from '../SpectimeTimeAxis/spectimeAxisItemDefinitions';
+import { TIME_AXIS_MARKERS } from '../SpectimeTimeAxis/spectimeAxisItemDefinitions';
+import { SpectimeSidebar } from '../SpectimeSidebar/spectimeSidebar';
 
 export interface TimelineProps {
   rows: RowDefinition[];
@@ -51,11 +48,14 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
   return (
     <SpectimeTimelineContainer className={styles.spectimeTimelineContainer}>
       <SpectimeTimeCursor at={now} />
-      <SpectimeTimeAxis timeAxisMarkers={HOUR_AXIS_MARKERS} />
       <SpectimeTimeAxis timeAxisMarkers={TIME_AXIS_MARKERS} />
       <SpectimeRowsContainer>
         {rows.map((row) => (
-          <SpectimeRow id={row.id} key={row.id} sidebar={<SpectimeSidebar row={row} />}>
+          <SpectimeRow
+            id={row.id}
+            key={row.id}
+            sidebar={<SpectimeSidebar>{row.id}</SpectimeSidebar>}
+          >
             {groupedSubrows[row.id]?.map((subrow, index) => (
               <SpectimeSubrow key={`${row.id}-${index}`}>
                 {subrow.map((item) => {
@@ -65,6 +65,7 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
                       <SpectimeIcon src={reactLogo} alt="lol" />
                       <SpectimeText>גזרת שדרה {item.id}</SpectimeText>
                       <SpectimeIcon src={reactLogo} alt="lol" />
+                      <div />
                     </SpectimeItem>
                   );
                 })}

@@ -1,0 +1,21 @@
+.labelContainer {
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: space-evenly;
+  padding-bottom: 4px;
+}
+
+.label {
+  font-size: 12px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.line {
+  width: 2px;
+  flex: 1;
+  background-color: currentColor;
+}

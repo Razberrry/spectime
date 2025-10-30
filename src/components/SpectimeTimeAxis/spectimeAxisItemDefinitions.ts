@@ -1,6 +1,8 @@
-import { MarkerDefinition, SimpleTickLabel, TickWithLineLabel } from 'chronon-timeline';
+import { MarkerDefinition } from 'chronon-timeline';
 import { format, hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { he } from 'date-fns/locale';
+import SpectimeSimpleTickLabel from '../SpectimeTicks/spectimeSimpleTick/simpleTickLabel';
+import SpectimeTickWithLineLabel from '../SpectimeTicks/tickWithLineLabel/tickWithLineLabel';
 
 type DateLabelFormatter = (date: Date) => string;
 
@@ -21,14 +23,14 @@ export const TIME_AXIS_MARKERS: MarkerDefinition[] = [
     value: minutesToMilliseconds(1),
     minRangeSize: 0,
     maxRangeSize: hoursToMilliseconds(3),
-    overrideComponent: SimpleTickLabel,
+    overrideComponent: SpectimeSimpleTickLabel,
   },
   {
     value: minutesToMilliseconds(5),
     minRangeSize: 0,
     maxRangeSize: hoursToMilliseconds(3),
     getLabel: formatMinutes,
-    overrideComponent: TickWithLineLabel,
+    overrideComponent: SpectimeTickWithLineLabel,
   },
 
   // 15 min minor, 30 min major (3h–12h)
@@ -36,14 +38,14 @@ export const TIME_AXIS_MARKERS: MarkerDefinition[] = [
     value: minutesToMilliseconds(15),
     minRangeSize: hoursToMilliseconds(3),
     maxRangeSize: hoursToMilliseconds(12),
-    overrideComponent: SimpleTickLabel,
+    overrideComponent: SpectimeSimpleTickLabel,
   },
   {
     value: minutesToMilliseconds(30),
     minRangeSize: hoursToMilliseconds(3),
     maxRangeSize: hoursToMilliseconds(12),
     getLabel: formatHourMinute,
-    overrideComponent: TickWithLineLabel,
+    overrideComponent: SpectimeTickWithLineLabel,
   },
 
   // 30 min minor, 1 h major (12h–30h)
@@ -51,14 +53,14 @@ export const TIME_AXIS_MARKERS: MarkerDefinition[] = [
     value: minutesToMilliseconds(30),
     minRangeSize: hoursToMilliseconds(12),
     maxRangeSize: hoursToMilliseconds(30),
-    overrideComponent: SimpleTickLabel,
+    overrideComponent: SpectimeSimpleTickLabel,
   },
   {
     value: hoursToMilliseconds(1),
     minRangeSize: hoursToMilliseconds(12),
     maxRangeSize: hoursToMilliseconds(30),
     getLabel: formatHourMinute,
-    overrideComponent: TickWithLineLabel,
+    overrideComponent: SpectimeTickWithLineLabel,
   },
 
   // 1 h minor, 2 h major (30h–50h)
@@ -66,14 +68,14 @@ export const TIME_AXIS_MARKERS: MarkerDefinition[] = [
     value: hoursToMilliseconds(1),
     minRangeSize: hoursToMilliseconds(30),
     maxRangeSize: hoursToMilliseconds(50),
-    overrideComponent: SimpleTickLabel,
+    overrideComponent: SpectimeSimpleTickLabel,
   },
   {
     value: hoursToMilliseconds(2),
     minRangeSize: hoursToMilliseconds(30),
     maxRangeSize: hoursToMilliseconds(50),
     getLabel: formatHourMinute,
-    overrideComponent: TickWithLineLabel,
+    overrideComponent: SpectimeTickWithLineLabel,
   },
 
   // Day ticks (≥ 50h)
@@ -81,20 +83,16 @@ export const TIME_AXIS_MARKERS: MarkerDefinition[] = [
     value: hoursToMilliseconds(24),
     minRangeSize: hoursToMilliseconds(50),
     getLabel: formatWeekday,
+    overrideComponent: SpectimeTickWithLineLabel,
   },
 ];
 
-export const HOUR_AXIS_MARKERS: MarkerDefinition[] = [
-  {
-    value: hoursToMilliseconds(1),
-    minRangeSize: minutesToMilliseconds(30),
-    maxRangeSize: hoursToMilliseconds(2),
-    getLabel: formatHebrewDate,
-  },
-  {
-    value: hoursToMilliseconds(2),
-    minRangeSize: minutesToMilliseconds(30),
-    maxRangeSize: hoursToMilliseconds(2),
-    overrideComponent: TickWithLineLabel,
-  },
-];
+// export const HOUR_AXIS_MARKERS: MarkerDefinition[] = [
+//   {
+//     value: hoursToMilliseconds(1),
+//     minRangeSize: minutesToMilliseconds(30),
+//     maxRangeSize: hoursToMilliseconds(2),
+//     getLabel: formatHebrewDate,
+//     overrideComponent: SpectimeTickWithLineLabel,
+//   },
+// ];
