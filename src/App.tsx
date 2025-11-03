@@ -1,4 +1,4 @@
-import { addHours, addMinutes, parseISO, subHours, subMinutes } from 'date-fns';
+import { addHours, parseISO, subHours } from 'date-fns';
 import { useState } from 'react';
 import {
   RangeToolbar,
@@ -20,12 +20,10 @@ const ITEMS = generateItems(
   5000,
   {
     start: parseISO('2024-10-01').getTime(),
-    end: parseISO('2025-11-01').getTime(),
+    end: parseISO('2025-12-01').getTime(),
   },
   ROWS,
 );
-
-console.log(parseISO('2024-09-23'));
 
 // [
 //           {

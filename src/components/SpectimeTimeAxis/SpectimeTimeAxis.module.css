@@ -1,5 +1,11 @@
-.timeAxis {
+.mainTimeAxis {
   background: rgba(255, 255, 255, 0.15);
   height: 32px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.hourTimeAxis {
+  height: 25px;
   overflow: hidden;
 }

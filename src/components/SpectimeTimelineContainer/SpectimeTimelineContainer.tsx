@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { Timeline } from 'chronon-timeline';
 
 import styles from './SpectimeTimelineContainer.module.css';
-
 export interface SpectimeTimelineContainerProps extends PropsWithChildren {
   className?: string;
   dir?: 'ltr' | 'rtl';

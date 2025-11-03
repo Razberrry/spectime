@@ -19,8 +19,6 @@ import { SpectimeText } from '../SpectimeText/SpectimeText';
 import { SpectimeItemRedMarker } from '../SpectimeItemRedMarker/SpectimeRedMarker';
 import { SpectimeRowsContainer } from '../SpectimeRowsCotainer/SpectimeRowsCotainer';
 
-import styles from './SpectimeTimeline.module.css';
-import { TIME_AXIS_MARKERS } from '../SpectimeTimeAxis/spectimeAxisItemDefinitions';
 import { SpectimeSidebar } from '../SpectimeSidebar/spectimeSidebar';
 
 export interface TimelineProps {
@@ -46,16 +44,12 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
   const now = new Date();
 
   return (
-    <SpectimeTimelineContainer className={styles.spectimeTimelineContainer}>
+    <SpectimeTimelineContainer>
       <SpectimeTimeCursor at={now} />
-      <SpectimeTimeAxis timeAxisMarkers={TIME_AXIS_MARKERS} />
+      <SpectimeTimeAxis />
       <SpectimeRowsContainer>
         {rows.map((row) => (
-          <SpectimeRow
-            id={row.id}
-            key={row.id}
-            sidebar={<SpectimeSidebar>{row.id}</SpectimeSidebar>}
-          >
+          <SpectimeRow id={row.id} key={row.id} sidebar={<SpectimeSidebar title={row.id} />}>
             {groupedSubrows[row.id]?.map((subrow, index) => (
               <SpectimeSubrow key={`${row.id}-${index}`}>
                 {subrow.map((item) => {

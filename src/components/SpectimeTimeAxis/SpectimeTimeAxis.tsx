@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import { TimeAxis, type TimeAxisProps, type TimelineAxisClasses } from 'chronon-timeline';
+import { TimeAxis, useTimelineContext, type TimeAxisProps } from 'chronon-timeline';
 
 import styles from './SpectimeTimeAxis.module.css';
+import { getScaledTimeAxisMarkers, HOUR_AXIS_MARKERS } from './spectimeAxisItemDefinitions';
 
-export type SpectimeTimeAxisProps = TimeAxisProps;
+export type SpectimeTimeAxisProps = Omit<TimeAxisProps, 'timeAxisMarkers'>;
 
 export const SpectimeTimeAxis: React.FC<SpectimeTimeAxisProps> = ({ classes, ...axisProps }) => {
-  const mergedClasses: TimelineAxisClasses = {
-    timeAxis: clsx(styles.timeAxis, classes?.timeAxis),
-  };
+  const { viewportWidth } = useTimelineContext();
 
-  return <TimeAxis {...axisProps} classes={mergedClasses} />;
+  const timeAxisMarkers = useMemo(() => getScaledTimeAxisMarkers(viewportWidth), [viewportWidth]);
+
+  return (
+    <>
+      <TimeAxis
+        classes={{
+          timeAxis: styles.hourTimeAxis,
+        }}
+        timeAxisMarkers={HOUR_AXIS_MARKERS}
+      />
+      <TimeAxis
+        {...axisProps}
+        timeAxisMarkers={timeAxisMarkers}
+        classes={{
+          timeAxis: clsx(styles.mainTimeAxis, classes?.timeAxis),
+        }}
+      />
+    </>
+  );
 };
