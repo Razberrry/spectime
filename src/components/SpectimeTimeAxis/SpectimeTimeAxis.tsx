@@ -11,7 +11,6 @@ export const SpectimeTimeAxis: React.FC<SpectimeTimeAxisProps> = ({ classes, ...
   const { viewportWidth } = useTimelineContext();
 
   const timeAxisMarkers = useMemo(() => getScaledTimeAxisMarkers(viewportWidth), [viewportWidth]);
-
   return (
     <>
       <TimeAxis

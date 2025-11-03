@@ -1,4 +1,4 @@
-import { addHours, parseISO, subHours } from 'date-fns';
+import { addHours, millisecondsToHours, parseISO, subHours } from 'date-fns';
 import { useState } from 'react';
 import {
   RangeToolbar,
@@ -39,7 +39,7 @@ const ITEMS = generateItems(
 const App = () => {
   const [range, setRange] = useState<Range>(DEFAULT_RANGE_HOUR);
   // const debouncedRange = useDeferredValue(range);
-
+  console.log(millisecondsToHours(range.end - range.start));
   const timelineAttributes = useTimeline({ range: range, onRangeChanged: setRange });
   return (
     <TimelineContextProvider {...timelineAttributes}>

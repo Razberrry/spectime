@@ -1,0 +1,13 @@
+.label {
+  display: flex;
+  color: white;
+  font-size: 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-weight: bold;
+  line-height: 1;
+  user-select: none;
+  white-space: nowrap;
+}
