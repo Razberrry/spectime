@@ -9,3 +9,30 @@
   height: 25px;
   overflow: hidden;
 }
+
+.hightlightedItem {
+  border-radius: 12px;
+  overflow: hidden;
+  color: white;
+  height: 100%;
+  z-index: 99;
+}
+
+.highlightItemContent {
+  height: 100%;
+  width: 100%;
+}
+
+.purpleLine {
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  border-radius: 12px;
+  background-image: linear-gradient(to right, rgb(118, 89, 206), rgb(160, 113, 185));
+}
+
+.rowWrapper {
+  position: relative;
+  height: 8px;
+  bottom: 5px;
+}

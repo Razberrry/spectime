@@ -77,20 +77,6 @@ const BASE_TIME_AXIS_MARKERS: MarkerDefinition[] = [
     render: (date: Date) => <SpectimeTickWithLineLabel label={formatHourMinute(new Date(date))} />,
   },
 
-  // 2 h minor, 4 h major (50h–100h)
-  {
-    value: hoursToMilliseconds(2),
-    minRangeSize: hoursToMilliseconds(50),
-    maxRangeSize: hoursToMilliseconds(100),
-    render: () => <SpectimeSimpleTick />,
-  },
-  {
-    value: hoursToMilliseconds(4),
-    minRangeSize: hoursToMilliseconds(50),
-    maxRangeSize: hoursToMilliseconds(100),
-    render: (date: Date) => <SpectimeTickWithLineLabel label={formatHourMinute(new Date(date))} />,
-  },
-
   // 4 h minor, 8 h major (50h–100h)
   {
     value: hoursToMilliseconds(2),
@@ -110,14 +96,13 @@ const BASE_TIME_AXIS_MARKERS: MarkerDefinition[] = [
     value: hoursToMilliseconds(12),
     minRangeSize: hoursToMilliseconds(100),
     maxRangeSize: hoursToMilliseconds(12 * 24),
-    render: () => <SpectimeLongTickLabel />,
+    render: (date: Date) => <SpectimeWeeklyLabel label={formatHebrewDate(new Date(date))} />,
   },
   {
     value: hoursToMilliseconds(24),
     minRangeSize: hoursToMilliseconds(100),
     maxRangeSize: hoursToMilliseconds(12 * 24),
-
-    render: (date: Date) => <SpectimeWeeklyLabel label={formatHebrewDate(new Date(date))} />,
+    render: () => <SpectimeLongTickLabel />,
   },
 
   // When minimized/half screen
@@ -125,26 +110,26 @@ const BASE_TIME_AXIS_MARKERS: MarkerDefinition[] = [
     value: hoursToMilliseconds(12),
     minRangeSize: hoursToMilliseconds(12 * 24),
     maxRangeSize: hoursToMilliseconds(15 * 24),
-    render: () => <SpectimeLongTickLabel />,
+    render: (date: Date) => (
+      <SpectimeWeeklyLabel label={formatHebrewDate(new Date(date)).replace('יום ', '')} />
+    ),
   },
   {
     value: hoursToMilliseconds(24),
     minRangeSize: hoursToMilliseconds(12 * 24),
     maxRangeSize: hoursToMilliseconds(15 * 24),
-    render: (date: Date) => (
-      <SpectimeWeeklyLabel label={formatHebrewDate(new Date(date)).replace('יום ', '')} />
-    ),
+    render: () => <SpectimeLongTickLabel />,
   },
 
   {
     value: hoursToMilliseconds(12),
     minRangeSize: hoursToMilliseconds(15 * 24),
-    render: () => <SpectimeLongTickLabel />,
+    render: (date: Date) => <SpectimeWeeklyLabel label={formatDate(new Date(date))} />,
   },
   {
     value: hoursToMilliseconds(24),
     minRangeSize: hoursToMilliseconds(15 * 24),
-    render: (date: Date) => <SpectimeWeeklyLabel label={formatDate(new Date(date))} />,
+    render: () => <SpectimeLongTickLabel />,
   },
 ];
 
@@ -172,7 +157,7 @@ export const getScaledTimeAxisMarkers = (viewportWidth: number): MarkerDefinitio
 
   const baseViewportWidth = window.screen.availWidth;
   const scale = viewportWidth / baseViewportWidth;
-
+  console.log({ scale });
   if (scale === 1) {
     return BASE_TIME_AXIS_MARKERS;
   }
@@ -182,4 +167,11 @@ export const getScaledTimeAxisMarkers = (viewportWidth: number): MarkerDefinitio
     minRangeSize: scaleBoundaries(marker.minRangeSize, scale),
     maxRangeSize: scaleBoundaries(marker.maxRangeSize, scale),
   }));
+};
+
+export const scaleRangeSize = (boundary: number, viewportWidth: number) => {
+  const baseViewportWidth = window.screen.availWidth;
+  const scale = viewportWidth / baseViewportWidth;
+  console.log({ boundary, scale });
+  return scaleBoundaries(boundary, scale) as number;
 };

@@ -13,6 +13,7 @@ const SpectimeBoldHourLabel: React.FC<SpectimeBoldHourLabelProps> = ({ hourLabel
     <span className={styles.hourLabel}>{hourLabel}</span>
     <span>•</span>
     <span className={styles.dateLabel}>{dateLabel}</span>
+    {hourLabel.length < 5 && <span className={styles.hiddenLabel}>•</span>}
   </div>
 );
 
