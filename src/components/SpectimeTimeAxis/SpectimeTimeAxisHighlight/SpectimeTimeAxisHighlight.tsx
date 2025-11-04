@@ -57,6 +57,7 @@ export const SpectimeTimeAxisHighlight: React.FC<SpectimeTimeAxisRowProps> = ({
         wrapper: styles.rowWrapper,
         content: styles.axisRowContent,
       }}
+      ignoreRefs={true}
     >
       {highlightAxisMarkers.map(({ span, render }: SpectimeTimeHighlight) => (
         <SimpleItem
