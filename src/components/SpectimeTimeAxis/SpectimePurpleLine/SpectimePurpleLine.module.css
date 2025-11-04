@@ -1,0 +1,7 @@
+.purpleLine {
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  flex: 1;
+  background-image: linear-gradient(to right, rgb(118, 89, 206), rgb(160, 113, 185));
+}

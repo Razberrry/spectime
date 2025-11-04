@@ -1,12 +1,22 @@
 import { MarkerDefinition } from 'chronon-timeline';
-import { format, hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
+import {
+  addHours,
+  endOfDay,
+  format,
+  hoursToMilliseconds,
+  minutesToMilliseconds,
+  parseISO,
+  startOfDay,
+  subHours,
+} from 'date-fns';
 import { he } from 'date-fns/locale';
 import SpectimeSimpleTick from '../SpectimeTimeAxisLabels/spectimeSimpleTick/spectimeSimpleTick';
 import SpectimeTickWithLineLabel from '../SpectimeTimeAxisLabels/spectimeTickWithLineLabel/spectimeTickWithLineLabel';
-import React from 'react';
 import SpectimeWeeklyLabel from '../SpectimeTimeAxisLabels/spectimeWeekLabel/spectimeWeekLabel';
 import SpectimeLongTickLabel from '../SpectimeTimeAxisLabels/spectimeLongTick/spectimeLongTick';
 import SpectimeBoldHourLabel from '../SpectimeTimeAxisLabels/spectimeBoldHourLabel/spectimeBoldHourLabel';
+import { SpectimeTimeHighlight } from './SpectimeTimeAxisHighlight/SpectimeTimeAxisHighlight';
+import SpectimePurpleLine from './SpectimePurpleLine/spectimePurpleHighlightLine';
 
 type DateLabelFormatter = (date: Date) => string;
 
@@ -20,7 +30,9 @@ export const formatHebrewDate: DateLabelFormatter = (date) => {
   return `${dayMonthPart} ${weekdayPart} `;
 };
 
-const BASE_TIME_AXIS_MARKERS: MarkerDefinition[] = [
+const NOW = new Date();
+
+export const BASE_TIME_AXIS_MARKERS: MarkerDefinition[] = [
   // 1 min minor, 5 min major (0h–3h)
   {
     value: minutesToMilliseconds(1),
@@ -138,6 +150,7 @@ export const HOUR_AXIS_MARKERS: MarkerDefinition[] = [
     value: hoursToMilliseconds(1),
     minRangeSize: minutesToMilliseconds(30),
     maxRangeSize: hoursToMilliseconds(2),
+
     render: (date: Date) => (
       <SpectimeBoldHourLabel
         hourLabel={formatHourMinute(new Date(date))}
@@ -147,31 +160,21 @@ export const HOUR_AXIS_MARKERS: MarkerDefinition[] = [
   },
 ];
 
-const scaleBoundaries = (boundary: number | undefined, scale: number) =>
-  boundary === undefined ? undefined : boundary * scale;
-
-export const getScaledTimeAxisMarkers = (viewportWidth: number): MarkerDefinition[] => {
-  if (!viewportWidth || viewportWidth <= 0) {
-    return BASE_TIME_AXIS_MARKERS;
-  }
-
-  const baseViewportWidth = window.screen.availWidth;
-  const scale = viewportWidth / baseViewportWidth;
-  console.log({ scale });
-  if (scale === 1) {
-    return BASE_TIME_AXIS_MARKERS;
-  }
-
-  return BASE_TIME_AXIS_MARKERS.map((marker) => ({
-    ...marker,
-    minRangeSize: scaleBoundaries(marker.minRangeSize, scale),
-    maxRangeSize: scaleBoundaries(marker.maxRangeSize, scale),
-  }));
-};
-
-export const scaleRangeSize = (boundary: number, viewportWidth: number) => {
-  const baseViewportWidth = window.screen.availWidth;
-  const scale = viewportWidth / baseViewportWidth;
-  console.log({ boundary, scale });
-  return scaleBoundaries(boundary, scale) as number;
-};
+export const TODAY_HIGHLIGHT_MARKER: SpectimeTimeHighlight[] = [
+  {
+    span: {
+      start: addHours(startOfDay(NOW), 5).getTime(),
+      end: subHours(endOfDay(NOW), 5).getTime(),
+    },
+    minRangeSize: hoursToMilliseconds(100),
+    render: <SpectimePurpleLine />,
+  },
+  {
+    span: {
+      start: parseISO('2025-11-20').getTime(),
+      end: parseISO('2025-11-24').getTime(),
+    },
+    minRangeSize: hoursToMilliseconds(100),
+    render: <SpectimePurpleLine />,
+  },
+];

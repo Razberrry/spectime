@@ -1,21 +1,23 @@
-.mainTimeAxis {
-  background: rgba(255, 255, 255, 0.15);
-  height: 32px;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.hourTimeAxis {
-  height: 25px;
+.rowWrapper {
+  position: relative;
+  height: 8px;
+  display: flex;
+  bottom: 5px;
   overflow: hidden;
 }
 
+.axisRowContent {
+  flex: 1;
+
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
 .hightlightedItem {
   border-radius: 12px;
   overflow: hidden;
-  color: white;
   height: 100%;
-  z-index: 99;
+  z-index: 1;
 }
 
 .highlightItemContent {
