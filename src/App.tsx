@@ -1,4 +1,4 @@
-import { addHours, millisecondsToHours, parseISO, subHours } from 'date-fns';
+import { addHours, parseISO, subHours } from 'date-fns';
 import { useState } from 'react';
 import {
   RangeToolbar,
@@ -7,8 +7,10 @@ import {
   Range,
   TimelineContextProvider,
   useTimeline,
+  generateFixedLengthItems,
 } from 'chronon-timeline';
-import { SpectimeTimeline } from './components/SpectimeTimeline/spectimeTimeline';
+
+import { SpectimeTimeline } from './components/SpectimeTimeline/SpectimeTimeline';
 const DEFAULT_RANGE_HOUR: Range = {
   start: subHours(new Date(), 12).getTime(),
   end: addHours(new Date(), 12).getTime(),
@@ -17,7 +19,7 @@ const DEFAULT_RANGE_HOUR: Range = {
 const ROWS = generateRows(2);
 
 const ITEMS = generateItems(
-  5000,
+  20000,
   {
     start: parseISO('2025-01-01').getTime(),
     end: parseISO('2025-12-31').getTime(),

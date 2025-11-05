@@ -1,11 +1,12 @@
 import {
-  buildVisibleRowSubrows,
-  groupItemsByRowSorted,
+  filterItemsBySpan,
   groupItemsToSubrows,
   ItemDefinition,
+  mapItemsToFullDaySpans,
   RowDefinition,
   useTimelineBehavior,
   useTimelineContext,
+  useTimelineMousePanAndZoom,
 } from 'chronon-timeline';
 import { useMemo } from 'react';
 import { SpectimeItem } from '../SpectimeItem/SpectimeItem';
@@ -21,6 +22,8 @@ import { SpectimeItemRedMarker } from '../SpectimeItemRedMarker/SpectimeRedMarke
 import { SpectimeRowsContainer } from '../SpectimeRowsCotainer/SpectimeRowsCotainer';
 
 import { SpectimeSidebar } from '../SpectimeSidebar/spectimeSidebar';
+import { hoursToMilliseconds } from 'date-fns';
+import { useVisibleTimelineItems } from '../../hooks/useVisibleTimelineItems/useVisibleTimelineItems';
 
 export interface TimelineProps {
   rows: RowDefinition[];
@@ -32,41 +35,19 @@ export interface TimelineProps {
   items: ItemDefinition[];
 }
 
+const NORMAL_SUBROW_HEIGHT = 60;
+const WEEKLY_SUBROW_HEIGHT = 40;
 export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
-  const { range } = useTimelineContext();
-  useTimelineBehavior();
+  const {
+    subrowsByRow: visibleSubrows,
+    rowIdWithMostVisibleLanes: rowIdWhoseRefsCount,
+    isWeekly,
+  } = useVisibleTimelineItems({
+    rows,
+    items,
+  });
 
-  const subrowsByRow = useMemo(() => groupItemsToSubrows(items), [items]);
-
-  const visibleSubrows = useMemo(() => {
-    const rangeStart = range.start;
-    const rangeEnd = range.end;
-
-    const result: Record<string, Array<{ laneIndex: number; items: ItemDefinition[] }>> = {};
-
-    for (const [rowId, lanes] of Object.entries(subrowsByRow)) {
-      const visibleLanes: Array<{
-        laneIndex: number;
-        items: ItemDefinition[];
-      }> = [];
-
-      lanes.forEach((lane, laneIndex) => {
-        const itemsInRange = lane.filter(
-          (item) => item.span.start < rangeEnd && item.span.end > rangeStart,
-        );
-
-        if (itemsInRange.length) {
-          visibleLanes.push({ laneIndex, items: itemsInRange });
-        }
-      });
-
-      if (visibleLanes.length) {
-        result[rowId] = visibleLanes;
-      }
-    }
-
-    return result;
-  }, [subrowsByRow, range.start, range.end]);
+  useTimelineMousePanAndZoom();
 
   const now = new Date();
 
@@ -75,19 +56,15 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
       <SpectimeTimeCursor at={now} />
       <SpectimeTimeAxis />
       <SpectimeRowsContainer>
-        {rows.map((row, rowIndex) => (
+        {rows.map((row) => (
           <SpectimeRow
             key={row.id}
             id={row.id}
-            ignoreRefs={rowIndex !== 0}
-            subrowHeight={45}
+            ignoreRefs={row.id !== rowIdWhoseRefsCount}
+            subrowHeight={isWeekly ? WEEKLY_SUBROW_HEIGHT : NORMAL_SUBROW_HEIGHT}
             sidebar={<SpectimeSidebar title={row.id} />}
-            virtualScroll={{
-              itemHeight: 45,
-              overscan: 3,
-            }}
           >
-            {visibleSubrows[row.id]?.map(({ items: subrowItems, laneIndex }) => (
+            {visibleSubrows[row.id]?.map((subrowItems, laneIndex) => (
               <SpectimeSubrow key={`${row.id}-lane-${laneIndex}`}>
                 {subrowItems.map((item) => (
                   <SpectimeItem key={item.id} id={item.id} span={item.span}>

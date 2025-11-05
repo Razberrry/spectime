@@ -5,7 +5,6 @@ import {
   format,
   hoursToMilliseconds,
   minutesToMilliseconds,
-  parseISO,
   startOfDay,
   subHours,
 } from 'date-fns';
@@ -165,22 +164,6 @@ export const TODAY_HIGHLIGHT_MARKER: SpectimeTimeHighlight[] = [
     span: {
       start: addHours(startOfDay(NOW), 5).getTime(),
       end: subHours(endOfDay(NOW), 5).getTime(),
-    },
-    minRangeSize: hoursToMilliseconds(100),
-    render: <SpectimePurpleLine />,
-  },
-  {
-    span: {
-      start: parseISO('2025-11-07').getTime(),
-      end: parseISO('2025-11-09').getTime(),
-    },
-    minRangeSize: hoursToMilliseconds(100),
-    render: <SpectimePurpleLine />,
-  },
-  {
-    span: {
-      start: parseISO('2025-11-20').getTime(),
-      end: parseISO('2025-11-24').getTime(),
     },
     minRangeSize: hoursToMilliseconds(100),
     render: <SpectimePurpleLine />,

@@ -16,6 +16,7 @@
     "chronon-timeline": "file:///Users/rzplg/Documents/chronon-timeline",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "jotai": "^2.15.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

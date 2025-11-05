@@ -12,6 +12,7 @@ export const SpectimeItem: React.FC<SpectimeItemProps> = ({ classes, children, .
       {...itemProps}
       classes={{
         ...classes,
+        content: clsx(styles.content, classes?.content),
         innerContainer: clsx(styles.innerContainer, classes?.innerContainer),
       }}
     >

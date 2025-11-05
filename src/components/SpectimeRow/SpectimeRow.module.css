@@ -3,19 +3,19 @@
   min-height: 0;
   box-sizing: border-box;
   overflow: hidden;
-
-
 }
 
-.sidebar {}
+.sidebar {
+}
 
 .content {
   flex: 1;
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 16px 0 0 16px;
   overflow-y: auto;
-
-
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
 }
 
 .content::-webkit-scrollbar {
@@ -31,7 +31,6 @@
 .content::-webkit-scrollbar-track {
   background: none;
   margin: 10px 0px;
-
 }
 
 .content::-webkit-scrollbar-thumb {
@@ -39,5 +38,4 @@
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
-
 }
