@@ -171,6 +171,14 @@ export const TODAY_HIGHLIGHT_MARKER: SpectimeTimeHighlight[] = [
   },
   {
     span: {
+      start: parseISO('2025-11-07').getTime(),
+      end: parseISO('2025-11-09').getTime(),
+    },
+    minRangeSize: hoursToMilliseconds(100),
+    render: <SpectimePurpleLine />,
+  },
+  {
+    span: {
       start: parseISO('2025-11-20').getTime(),
       end: parseISO('2025-11-24').getTime(),
     },

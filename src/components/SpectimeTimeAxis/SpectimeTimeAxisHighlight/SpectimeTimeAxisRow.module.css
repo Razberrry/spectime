@@ -1,6 +1,6 @@
 .rowWrapper {
   position: relative;
-  height: 8px;
+  height: 100%;
   display: flex;
   bottom: 5px;
   overflow: hidden;
@@ -9,8 +9,8 @@
 .hightlightedItem {
   border-radius: 12px;
   overflow: hidden;
-  height: 100%;
   z-index: 1;
+  height: 100%;
 }
 
 .highlightItemContent {
@@ -28,4 +28,8 @@
 
 .axisRowContent::-webkit-scrollbar {
   width: 8px;
+}
+
+.subRowHeight {
+  overflow: visible;
 }

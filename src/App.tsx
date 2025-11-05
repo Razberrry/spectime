@@ -17,28 +17,16 @@ const DEFAULT_RANGE_HOUR: Range = {
 const ROWS = generateRows(2);
 
 const ITEMS = generateItems(
-  100,
+  5000,
   {
-    start: parseISO('2025-10-01').getTime(),
-    end: parseISO('2025-12-01').getTime(),
+    start: parseISO('2025-01-01').getTime(),
+    end: parseISO('2025-12-31').getTime(),
   },
   ROWS,
 );
 
-// [
-//           {
-//             id: '3',
-//             rowId: 'row-0',
-//             span: {
-//               start: new Date(new Date().setHours(14, 0, 0)).getTime(),
-//               end: new Date(new Date().setHours(15, 0, 0)).getTime(),
-//             },
-//           },
-//         ]
-
 const App = () => {
   const [range, setRange] = useState<Range>(DEFAULT_RANGE_HOUR);
-  // const debouncedRange = useDeferredValue(range);
   const timelineAttributes = useTimeline({ range: range, onRangeChanged: setRange });
   return (
     <TimelineContextProvider {...timelineAttributes}>

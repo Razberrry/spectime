@@ -1,6 +1,13 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import { BasicLabelDefinition, SimpleItem, Row, Span, useTimelineContext } from 'chronon-timeline';
+import {
+  BasicLabelDefinition,
+  SimpleItem,
+  Row,
+  Span,
+  useTimelineContext,
+  Subrow,
+} from 'chronon-timeline';
 
 import styles from './SpectimeTimeAxisRow.module.css';
 import { getScaledTimeAxisMarkers } from '../scaleBoundaries';
@@ -57,22 +64,30 @@ export const SpectimeTimeAxisHighlight: React.FC<SpectimeTimeAxisRowProps> = ({
         wrapper: styles.rowWrapper,
         content: styles.axisRowContent,
       }}
-      ignoreRefs={true}
+      ignoreRefs
+      subrowHeight={8}
     >
-      {highlightAxisMarkers.map(({ span, render }: SpectimeTimeHighlight) => (
-        <SimpleItem
-          key={`highlight-${span.start}-${span.end}`}
-          id={`highlight-${span.start}-${span.end}`}
-          classes={{
-            item: clsx(styles.hightlightedItem, classes?.item),
-            content: clsx(styles.highlightItemContent, classes?.content),
-            innerContainer: clsx(styles.highlightItemContent, classes?.innerContainer),
-          }}
-          span={span}
-        >
-          {render}
-        </SimpleItem>
-      ))}
+      <Subrow
+        classes={{
+          subrow: styles.subRowHeight,
+        }}
+        key={'highlight-subrow'}
+      >
+        {highlightAxisMarkers.map(({ span, render }: SpectimeTimeHighlight) => (
+          <SimpleItem
+            key={`highlight-${span.start}-${span.end}`}
+            id={`highlight-${span.start}-${span.end}`}
+            classes={{
+              item: clsx(styles.hightlightedItem, classes?.item),
+              content: clsx(styles.highlightItemContent, classes?.content),
+              innerContainer: clsx(styles.highlightItemContent, classes?.innerContainer),
+            }}
+            span={span}
+          >
+            {render}
+          </SimpleItem>
+        ))}
+      </Subrow>
     </Row>
   );
 };
