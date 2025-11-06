@@ -1,19 +1,9 @@
-import {
-  filterItemsBySpan,
-  groupItemsToSubrows,
-  ItemDefinition,
-  mapItemsToFullDaySpans,
-  RowDefinition,
-  useTimelineBehavior,
-  useTimelineContext,
-  useTimelineMousePanAndZoom,
-} from 'chronon-timeline';
-import { useMemo } from 'react';
+import { ItemDefinition, RowDefinition, useTimelineMousePanAndZoom } from 'chronon-timeline';
+import type { Atom } from 'jotai';
 import { SpectimeItem } from '../SpectimeItem/SpectimeItem';
 import { SpectimeTimelineContainer } from '../SpectimeTimelineContainer/SpectimeTimelineContainer';
 import { SpectimeRow } from '../SpectimeRow/SpectimeRow';
 import { SpectimeSubrow } from '../SpectimeSubrow/SpectimeSubrow';
-import { SpectimeTimeCursor } from '../SpectimeTimeCursor/SpectimeTimeCursor';
 import { SpectimeTimeAxis } from '../SpectimeTimeAxis/SpectimeTimeAxis';
 import reactLogo from '../../assets/react.svg';
 import { SpectimeIcon } from '../SpectimeIcon/SpectimeIcon';
@@ -22,22 +12,19 @@ import { SpectimeItemRedMarker } from '../SpectimeItemRedMarker/SpectimeRedMarke
 import { SpectimeRowsContainer } from '../SpectimeRowsCotainer/SpectimeRowsCotainer';
 
 import { SpectimeSidebar } from '../SpectimeSidebar/spectimeSidebar';
-import { hoursToMilliseconds } from 'date-fns';
 import { useVisibleTimelineItems } from '../../hooks/useVisibleTimelineItems/useVisibleTimelineItems';
+import { useTimelineAutoPanUntilInteraction } from '../../hooks/useTimelineAutoPanUntilInteraction';
+import { SpectimeCurrentTimeCursor } from '../SpectimeCurrentTimeCursor';
 
 export interface TimelineProps {
   rows: RowDefinition[];
   items: ItemDefinition[];
-}
-
-export interface TimelineProps {
-  rows: RowDefinition[];
-  items: ItemDefinition[];
+  currentTimeAtom: Atom<number>;
 }
 
 const NORMAL_SUBROW_HEIGHT = 60;
 const WEEKLY_SUBROW_HEIGHT = 40;
-export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
+export const SpectimeTimeline = ({ rows, items, currentTimeAtom }: TimelineProps) => {
   const {
     subrowsByRow: visibleSubrows,
     rowIdWithMostVisibleLanes: rowIdWhoseRefsCount,
@@ -46,14 +33,11 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
     rows,
     items,
   });
-
-  useTimelineMousePanAndZoom();
-
-  const now = new Date();
+  // const
 
   return (
     <SpectimeTimelineContainer>
-      <SpectimeTimeCursor at={now} />
+      <SpectimeCurrentTimeCursor currentTimeAtom={currentTimeAtom} />
       <SpectimeTimeAxis />
       <SpectimeRowsContainer>
         {rows.map((row) => (
@@ -71,7 +55,6 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
                     <SpectimeItemRedMarker />
                     <SpectimeIcon src={reactLogo} alt="lol" />
                     <SpectimeText>גזרת שדרה {item.id}</SpectimeText>
-                    <SpectimeIcon src={reactLogo} alt="lol" />
                     <div />
                   </SpectimeItem>
                 ))}
