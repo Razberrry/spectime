@@ -41,7 +41,7 @@ export const useVisibleTimelineItems = ({
 }: UseVisibleTimelineItemsParams): UseVisibleTimelineItemsResult => {
   const { range } = useTimelineContext();
 
-  const isWeekly = useMemo(() => hoursToMilliseconds(7 * 24) <= range.end - range.start, [range]);
+  const isWeekly = useMemo(() => hoursToMilliseconds(3 * 24) <= range.end - range.start, [range]);
 
   const itemsForGrouping = useMemo(
     () => (isWeekly ? mapItemsToFullDaySpans(items) : items),

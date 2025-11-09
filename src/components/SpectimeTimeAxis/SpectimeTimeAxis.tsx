@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import { TimeAxis, useTimelineContext, type TimeAxisProps } from 'chronon-timeline';
+import { RangeToolbar, TimeAxis, useTimelineContext, type TimeAxisProps } from 'chronon-timeline';
 
 import styles from './SpectimeTimeAxis.module.css';
 import {
@@ -34,6 +34,7 @@ export const SpectimeTimeAxis: React.FC<SpectimeTimeAxisProps> = ({ classes, ...
         classes={{
           timeAxis: clsx(styles.mainTimeAxis, classes?.timeAxis),
         }}
+        startElement={<RangeToolbar setRange={handleSetRange} />}
       />
 
       <SpectimeTimeAxisHighlight highlightMarkers={TODAY_HIGHLIGHT_MARKER} />

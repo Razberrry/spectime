@@ -1,8 +1,9 @@
-import React from 'react';
-import { Item, type ItemProps } from 'chronon-timeline';
+import React, { useCallback } from 'react';
+import { Item, useTimelineContext, type ItemProps } from 'chronon-timeline';
 import clsx from 'clsx';
 
 import styles from './SpectimeItem.module.css';
+import { format } from 'date-fns';
 
 export type SpectimeItemProps = ItemProps;
 

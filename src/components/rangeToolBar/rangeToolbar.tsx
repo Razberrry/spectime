@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
 
-import './rangeToolbar.base.css';
+import styles from './rangeToolbar.module.css';
+
 import {
   buildPresetRange,
   getClosestPresetKey,
   getRangeDurationMilliseconds,
   PresetKey,
 } from './rangetoolbarFunctions';
-import { useTimelineContext } from 'chronon-timeline';
+import { useTimelineContext, Range } from 'chronon-timeline';
 
 const PRESETS: Array<{ key: PresetKey; label: string }> = [
   { key: 'hour', label: 'Hour' },
@@ -41,7 +42,7 @@ export const RangeToolbar: React.FC<RangeToolbarProps> = ({ setRange, classes })
   );
 
   return (
-    <div className={clsx('TlTimeline-rangeToolbar', classes?.toolbar)}>
+    <div className={clsx(styles.rangeToolbar, classes?.toolbar)}>
       {PRESETS.map(({ key, label }) => {
         const isActive = activePresetKey === key;
 
@@ -50,8 +51,8 @@ export const RangeToolbar: React.FC<RangeToolbarProps> = ({ setRange, classes })
             key={key}
             type="button"
             className={clsx(
-              'TlTimeline-rangeToolbarButton',
-              isActive && 'TlTimeline-rangeToolbarButton--active',
+              styles.rangeToolbar,
+              isActive && styles.rangeToolbarActive,
               classes?.button,
               isActive && classes?.activeButton,
             )}

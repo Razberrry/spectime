@@ -24,7 +24,7 @@ export interface UseTimelineAutoPanUntilInteractionResult {
 export const useTimelineAutoPanUntilInteraction = <T extends CurrentTimeValue>({
   currentTimeAtom,
 }: UseTimelineAutoPanUntilInteractionOptions<T>): UseTimelineAutoPanUntilInteractionResult => {
-  const { timelineRef, onRangeChanged } = useTimelineContext();
+  const { timelineRef, setRange } = useTimelineContext();
   const store = useStore();
 
   const hasUserInteractedRef = useRef(false);
@@ -55,7 +55,7 @@ export const useTimelineAutoPanUntilInteraction = <T extends CurrentTimeValue>({
     const delta = nextTimeInMilliseconds - previousTimeInMilliseconds;
     if (delta === 0) return;
 
-    onRangeChanged(({ start, end }) => ({
+    setRange(({ start, end }) => ({
       start: start + delta,
       end: end + delta,
     }));
@@ -116,7 +116,7 @@ export const useTimelineAutoPanUntilInteraction = <T extends CurrentTimeValue>({
         document.removeEventListener('visibilitychange', handleVisibilityChange);
       }
     };
-  }, [timelineRef, onRangeChanged, store, currentTimeAtom]);
+  }, [timelineRef, setRange, store, currentTimeAtom]);
 
   return { resetAutopan };
 };
