@@ -31,7 +31,6 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
     items,
   });
 
-  useTimelineMousePanAndZoom();
   return (
     <SpectimeTimelineContainer>
       <SpectimeCurrentTimeCursor currentTimeAtom={currentTimeAtom} />
@@ -44,9 +43,6 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
             ignoreRefs={row.id !== rowIdWhoseRefsCount}
             subrowHeight={isWeekly ? WEEKLY_SUBROW_HEIGHT : NORMAL_SUBROW_HEIGHT}
             sidebar={<SpectimeSidebar title={row.id} />}
-            virtualScroll={{
-              itemHeight: isWeekly ? WEEKLY_SUBROW_HEIGHT : NORMAL_SUBROW_HEIGHT,
-            }}
           >
             {visibleSubrows[row.id]?.map((subrowItems, laneIndex) => (
               <SpectimeSubrow key={`${row.id}-lane-${laneIndex}`}>

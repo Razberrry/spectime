@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
-import { Item, useTimelineContext, type ItemProps } from 'chronon-timeline';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React from 'react';
+import { Item, type ItemProps } from 'chronon-timeline';
 import clsx from 'clsx';
 
 import styles from './SpectimeItem.module.css';
-import { format } from 'date-fns';
 
 export type SpectimeItemProps = ItemProps;
 
@@ -14,10 +15,15 @@ export const SpectimeItem: React.FC<SpectimeItemProps> = ({ classes, children, .
       classes={{
         ...classes,
         content: clsx(styles.content, classes?.content),
-        innerContainer: clsx(styles.innerContainer, classes?.innerContainer),
       }}
     >
-      {children}
+      <div
+        // onClick={{}
+
+        className={clsx(styles.innerContainer, classes?.innerContainer)}
+      >
+        {children}
+      </div>
     </Item>
   );
 };

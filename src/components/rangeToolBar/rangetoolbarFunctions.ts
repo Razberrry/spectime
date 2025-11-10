@@ -3,10 +3,10 @@ import {
   differenceInMilliseconds,
   hoursToMilliseconds,
   subMilliseconds,
-} from "date-fns";
-import type { Range } from "../../types";
+} from 'date-fns';
+import type { Range } from 'chronon-timeline';
 
-export type PresetKey = "hour" | "day" | "week";
+export type PresetKey = 'hour' | 'day' | 'week';
 
 export const DURATION_ONE_HOUR_MILLISECONDS = hoursToMilliseconds(1);
 export const DURATION_EIGHT_HOURS_MILLISECONDS = hoursToMilliseconds(8);
@@ -18,17 +18,12 @@ export const PRESET_DURATIONS_MILLISECONDS: Record<PresetKey, number> = {
   week: DURATION_FIFTY_HOURS_MILLISECONDS,
 };
 
-export const createRangeCenteredOnNow = (
-  durationMilliseconds: number
-): Range => {
+export const createRangeCenteredOnNow = (durationMilliseconds: number): Range => {
   const now = new Date();
   const halfMilliseconds = Math.floor(durationMilliseconds / 2);
   return {
     start: subMilliseconds(now, halfMilliseconds).getTime(),
-    end: addMilliseconds(
-      now,
-      durationMilliseconds - halfMilliseconds
-    ).getTime(),
+    end: addMilliseconds(now, durationMilliseconds - halfMilliseconds).getTime(),
   };
 };
 
@@ -38,10 +33,8 @@ export const buildPresetRange = (presetKey: PresetKey): Range =>
 export const getRangeDurationMilliseconds = (range: Range): number =>
   differenceInMilliseconds(new Date(range.end), new Date(range.start));
 
-export const getClosestPresetKey = (
-  durationMilliseconds: number
-): PresetKey => {
-  let bestKey: PresetKey = "hour";
+export const getClosestPresetKey = (durationMilliseconds: number): PresetKey => {
+  let bestKey: PresetKey = 'hour';
   let bestDistance = Number.POSITIVE_INFINITY;
   (Object.keys(PRESET_DURATIONS_MILLISECONDS) as PresetKey[]).forEach((key) => {
     const target = PRESET_DURATIONS_MILLISECONDS[key];

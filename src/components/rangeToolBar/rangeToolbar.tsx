@@ -9,7 +9,8 @@ import {
   getRangeDurationMilliseconds,
   PresetKey,
 } from './rangetoolbarFunctions';
-import { useTimelineContext, Range } from 'chronon-timeline';
+import { Range } from 'chronon-timeline';
+import { useSpectimeTimelineContext } from '../SpectimeTimelineWithToolbar/SpectimeTimelineProvider';
 
 const PRESETS: Array<{ key: PresetKey; label: string }> = [
   { key: 'hour', label: 'Hour' },
@@ -24,13 +25,16 @@ export type TimelineRangeToolbarClasses = {
 };
 
 export interface RangeToolbarProps {
-  setRange: (range: Range) => void;
   classes?: TimelineRangeToolbarClasses;
 }
 
-export const RangeToolbar: React.FC<RangeToolbarProps> = ({ setRange, classes }) => {
-  const { range: timelineRange } = useTimelineContext();
+export const RangeToolbar: React.FC<RangeToolbarProps> = ({ classes }) => {
+  const { range: timelineRange, resetAutopan, setRange } = useSpectimeTimelineContext();
 
+  const handleRangeChange = (range: Range) => {
+    resetAutopan();
+    setRange(range);
+  };
   const currentDurationMilliseconds = useMemo(
     () => getRangeDurationMilliseconds(timelineRange),
     [timelineRange],
@@ -56,8 +60,13 @@ export const RangeToolbar: React.FC<RangeToolbarProps> = ({ setRange, classes })
               classes?.button,
               isActive && classes?.activeButton,
             )}
-            onClick={() => setRange(buildPresetRange(key))}
+            onClick={() => handleRangeChange(buildPresetRange(key))}
             aria-pressed={isActive}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              e.nativeEvent.stopImmediatePropagation();
+              handleRangeChange(buildPresetRange(key));
+            }}
           >
             {label}
           </button>

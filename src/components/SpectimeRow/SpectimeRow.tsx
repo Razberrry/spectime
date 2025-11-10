@@ -9,6 +9,7 @@ export type SpectimeRowProps = RowProps;
 export const SpectimeRow: React.FC<SpectimeRowProps> = ({ classes, ...rowProps }) => {
   return (
     <Row
+      virtualizeSubrows
       {...rowProps}
       classes={{
         wrapper: clsx(styles.wrapper, classes?.wrapper),

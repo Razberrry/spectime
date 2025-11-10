@@ -3,6 +3,7 @@
   min-height: 0;
   box-sizing: border-box;
   overflow: hidden;
+  width: 100%;
 }
 
 .sidebar {
@@ -14,7 +15,6 @@
   border-radius: 16px 0 0 16px;
   overflow-y: auto;
   display: flex;
-  flex-direction: column;
   padding-top: 5px;
 }
 
