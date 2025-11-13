@@ -5,7 +5,6 @@ import { generateItems, generateRows, Range, useTimeline } from 'chronon-timelin
 import { SpectimeTimelineProvider } from './SpectimeTimelineProvider';
 import { SpectimeTimeline, type TimelineProps } from '../SpectimeTimeline/SpectimeTimeline';
 import { currentTimeAtom } from '../../currentTimeAtom';
-import { RangeToolbar } from '../rangeToolBar/rangeToolbar';
 
 const DEFAULT_RANGE_HOUR: Range = {
   start: subHours(new Date(), 12).getTime(),
@@ -23,24 +22,6 @@ const ITEMS = generateItems(
   ROWS,
 );
 
-// const ITEMS = [
-//   ...Array.from({ length: 100 }).fill({
-//     rowId: 'row-0',
-//     span: {
-//       start: parseISO('2025-11-10T07:20:00.000Z').getTime(),
-//       end: parseISO('2025-11-10T12:30:00.000Z').getTime(),
-//     },
-//     id: 'lol',
-//   }),
-//   {
-//     rowId: 'row-0',
-//     span: {
-//       start: parseISO('2025-11-10T07:20:00.000Z').getTime(),
-//       end: parseISO('2025-12-10T14:30:00.000Z').getTime(),
-//     },
-//     id: 'lol',
-//   },
-// ];
 interface SpectimeTimelineWithToolbarProps {
   rows?: TimelineProps['rows'];
   items?: TimelineProps['items'];

@@ -1,4 +1,4 @@
-import { ItemDefinition, RowDefinition, useTimelineMousePanAndZoom } from 'chronon-timeline';
+import { ItemDefinition, RowDefinition } from 'chronon-timeline';
 import { SpectimeItem } from '../SpectimeItem/SpectimeItem';
 import { SpectimeTimelineContainer } from '../SpectimeTimelineContainer/SpectimeTimelineContainer';
 import { SpectimeRow } from '../SpectimeRow/SpectimeRow';
