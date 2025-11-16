@@ -10,7 +10,6 @@ import {
 } from './spectimeAxisItemDefinitions';
 import { getScaledTimeAxisMarkers } from './scaleBoundaries';
 import SpectimeTimeAxisHighlight from './SpectimeTimeAxisHighlight/SpectimeTimeAxisHighlight';
-import { RangeToolbar } from '../rangeToolBar/rangeToolbar';
 
 export type SpectimeTimeAxisProps = Omit<TimeAxisProps, 'timeAxisMarkers'>;
 
@@ -35,7 +34,6 @@ export const SpectimeTimeAxis: React.FC<SpectimeTimeAxisProps> = ({ classes, ...
         classes={{
           timeAxis: clsx(styles.mainTimeAxis, classes?.timeAxis),
         }}
-        startElement={<RangeToolbar />}
       />
 
       <SpectimeTimeAxisHighlight highlightMarkers={TODAY_HIGHLIGHT_MARKER} />

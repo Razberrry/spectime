@@ -1,7 +1,9 @@
 .rangeToolbar {
   display: flex;
+  /* padding: 5px; */
 }
 
 .rangeToolbarActive {
   background-color: rgb(60, 60, 60);
+  background-color: lightpink;
 }

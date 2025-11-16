@@ -1,10 +1,11 @@
 import { addHours, parseISO, subHours } from 'date-fns';
 import { useState } from 'react';
-import { generateItems, generateRows, Range, useTimeline } from 'chronon-timeline';
+import { generateItems, generateRows, useTimeline, Range } from 'chronon-timeline';
 
 import { SpectimeTimelineProvider } from './SpectimeTimelineProvider';
 import { SpectimeTimeline, type TimelineProps } from '../SpectimeTimeline/SpectimeTimeline';
 import { currentTimeAtom } from '../../currentTimeAtom';
+import { RangeToolbar } from '../rangeToolBar/rangeToolbar';
 
 const DEFAULT_RANGE_HOUR: Range = {
   start: subHours(new Date(), 12).getTime(),
@@ -14,7 +15,7 @@ const DEFAULT_RANGE_HOUR: Range = {
 const ROWS = generateRows(2);
 
 const ITEMS = generateItems(
-  100_000,
+  5000,
   {
     start: parseISO('2025-01-01').getTime(),
     end: parseISO('2025-12-31').getTime(),
@@ -35,6 +36,7 @@ export const SpectimeTimelineWithToolbar = ({
   const timelineAttributes = useTimeline({ range, setRange });
   return (
     <SpectimeTimelineProvider {...timelineAttributes} currentTimeAtom={currentTimeAtom}>
+      <RangeToolbar />
       <SpectimeTimeline items={items} rows={rows} />
     </SpectimeTimelineProvider>
   );
