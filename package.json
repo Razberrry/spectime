@@ -1,24 +1,56 @@
 {
   "name": "spectime",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.1.0",
+  "description": "Spectime timeline components built on chronon-timeline.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Razberrry/spectime.git"
+  },
+  "keywords": [
+    "react",
+    "timeline",
+    "scheduler",
+    "gantt",
+    "chronon-timeline",
+    "spectime"
+  ],
   "type": "module",
+  "main": "./dist/spectime.cjs",
+  "module": "./dist/spectime.es.js",
+  "types": "./dist/types/entry.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/spectime.es.js",
+      "require": "./dist/spectime.cjs",
+      "types": "./dist/types/entry.d.ts"
+    }
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build && tsc --project tsconfig.build.json && node scripts/copy-types.cjs",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepublishOnly": "npm run build"
   },
-  "dependencies": {
-    "chronon-timeline": "file:///Users/rzplg/Documents/chronon-timeline",
+  "peerDependencies": {
+    "chronon-timeline": "^0.1.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "jotai": "^2.15.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-virtuoso": "^4.14.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
@@ -26,6 +58,9 @@
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "chronon-timeline": "0.1.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -33,8 +68,13 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-react-refresh": "^0.4.24",
+    "jotai": "^2.15.1",
     "prettier": "^3.6.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-virtuoso": "^4.14.1",
     "typescript": "^5.9.3",
-    "vite": "^4.1.0"
+    "vite": "^4.1.0",
+    "vite-plugin-css-injected-by-js": "^3.5.2"
   }
 }

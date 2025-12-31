@@ -1,7 +1,7 @@
-import { SpectimeTimelineWithToolbar } from './components/SpectimeTimelineWithToolbar/SpectimeTimelineWithToolbar';
+import { SpectimeExampleApp } from './examples/basicExample/SpectimeExampleApp';
 
 const App = () => {
-  return <SpectimeTimelineWithToolbar />;
+  return <SpectimeExampleApp />;
 };
 
 export default App;

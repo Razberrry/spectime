@@ -14,7 +14,7 @@ const DEFAULT_RANGE_HOUR: Range = {
 const ROWS = generateRows(2);
 
 const ITEMS = generateItems(
-  50000,
+  20_000,
   {
     start: parseISO('2025-01-01').getTime(),
     end: parseISO('2026-12-31').getTime(),

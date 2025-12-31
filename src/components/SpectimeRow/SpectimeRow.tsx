@@ -1,14 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Row, type RowProps } from 'chronon-timeline';
+import { VirtualizedRow, type VirtualizedRowProps } from 'chronon-timeline';
 
 import styles from './SpectimeRow.module.css';
 
-export type SpectimeRowProps = RowProps;
+export type SpectimeRowProps = VirtualizedRowProps;
 
 export const SpectimeRow: React.FC<SpectimeRowProps> = ({ classes, ...rowProps }) => {
   return (
-    <Row
+    <VirtualizedRow
       virtualizeSubrows
       {...rowProps}
       classes={{
