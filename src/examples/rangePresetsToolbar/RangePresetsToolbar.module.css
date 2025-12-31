@@ -1,0 +1,20 @@
+.rangeToolbar {
+  display: flex;
+  gap: 2px;
+  height: 100%;
+  align-items: center;
+}
+.rangeToolbarButton {
+  background-color: rgba(255, 255, 255, 0.54);
+  padding: 4px;
+  color: white;
+  border-radius: 8px;
+  box-shadow: none;
+  outline: none;
+  font-size: 10px;
+  border: none;
+}
+
+.rangeToolbarButton.rangeToolbarActive {
+  background-color: rgba(52, 10, 77, 0.333);
+}
