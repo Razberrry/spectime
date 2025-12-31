@@ -9,13 +9,13 @@ import type { Range } from 'chronon-timeline';
 export type PresetKey = 'hour' | 'day' | 'week';
 
 export const DURATION_ONE_HOUR_MILLISECONDS = hoursToMilliseconds(1);
-export const DURATION_EIGHT_HOURS_MILLISECONDS = hoursToMilliseconds(8);
-export const DURATION_FIFTY_HOURS_MILLISECONDS = hoursToMilliseconds(100);
+export const DURATION_DAY_HOURS_MILLISECONDS = hoursToMilliseconds(8);
+export const DURATION_WEEK_HOURS_MILLISECONDS = hoursToMilliseconds(3 * 24);
 
 export const PRESET_DURATIONS_MILLISECONDS: Record<PresetKey, number> = {
   hour: DURATION_ONE_HOUR_MILLISECONDS,
-  day: DURATION_EIGHT_HOURS_MILLISECONDS,
-  week: DURATION_FIFTY_HOURS_MILLISECONDS,
+  day: DURATION_DAY_HOURS_MILLISECONDS,
+  week: DURATION_WEEK_HOURS_MILLISECONDS,
 };
 
 export const createRangeCenteredOnNow = (durationMilliseconds: number): Range => {

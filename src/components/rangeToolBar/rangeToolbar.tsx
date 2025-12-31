@@ -55,9 +55,9 @@ export const RangeToolbar: React.FC<RangeToolbarProps> = ({ classes }) => {
             key={key}
             type="button"
             className={clsx(
-              styles.rangeToolbar,
-              isActive && styles.rangeToolbarActive,
+              styles.rangeToolbarButton,
               classes?.button,
+              isActive && styles.rangeToolbarActive,
               isActive && classes?.activeButton,
             )}
             onClick={() => handleRangeChange(buildPresetRange(key))}

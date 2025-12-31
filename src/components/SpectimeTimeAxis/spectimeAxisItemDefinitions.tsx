@@ -3,8 +3,10 @@ import {
   addHours,
   endOfDay,
   format,
+  formatISO,
   hoursToMilliseconds,
   minutesToMilliseconds,
+  parseISO,
   startOfDay,
   subHours,
 } from 'date-fns';
@@ -74,49 +76,61 @@ export const BASE_TIME_AXIS_MARKERS: MarkerDefinition[] = [
     render: (date: Date) => <SpectimeTickWithLineLabel label={formatHourMinute(new Date(date))} />,
   },
 
-  // 1 h minor, 2 h major (30h–50h)
+  // 1 h minor, 2 h major (30h–75h)
   {
     value: hoursToMilliseconds(1),
     minRangeSize: hoursToMilliseconds(30),
-    maxRangeSize: hoursToMilliseconds(50),
+    maxRangeSize: hoursToMilliseconds(75),
     render: () => <SpectimeSimpleTick />,
   },
   {
     value: hoursToMilliseconds(2),
     minRangeSize: hoursToMilliseconds(30),
-    maxRangeSize: hoursToMilliseconds(50),
+    maxRangeSize: hoursToMilliseconds(75),
     render: (date: Date) => <SpectimeTickWithLineLabel label={formatHourMinute(new Date(date))} />,
   },
 
-  // 4 h minor, 8 h major (50h–100h)
+  // 2 h minor, 4 h major (75h–200h)
   {
     value: hoursToMilliseconds(2),
-    minRangeSize: hoursToMilliseconds(50),
-    maxRangeSize: hoursToMilliseconds(100),
+    minRangeSize: hoursToMilliseconds(75),
+    maxRangeSize: hoursToMilliseconds(200),
     render: () => <SpectimeSimpleTick />,
   },
   {
     value: hoursToMilliseconds(4),
-    minRangeSize: hoursToMilliseconds(50),
-    maxRangeSize: hoursToMilliseconds(100),
+    minRangeSize: hoursToMilliseconds(75),
+    maxRangeSize: hoursToMilliseconds(200),
     render: (date: Date) => <SpectimeTickWithLineLabel label={formatHourMinute(new Date(date))} />,
   },
 
-  // 12 h minor, 24 h major (100h+)
+  // 4 h minor, 8 h major (200h+)
+  {
+    value: hoursToMilliseconds(4),
+    minRangeSize: hoursToMilliseconds(200),
+    render: () => <SpectimeSimpleTick />,
+  },
+  {
+    value: hoursToMilliseconds(8),
+    minRangeSize: hoursToMilliseconds(200),
+    render: (date: Date) => <SpectimeTickWithLineLabel label={formatHourMinute(new Date(date))} />,
+  },
+];
+
+export const WEEKLY_TIME_AXIS_MARKERS: MarkerDefinition[] = [
   {
     value: hoursToMilliseconds(12),
-    minRangeSize: hoursToMilliseconds(100),
+    // minRangeSize: hoursToMilliseconds(100),
     maxRangeSize: hoursToMilliseconds(12 * 24),
     render: (date: Date) => <SpectimeWeeklyLabel label={formatHebrewDate(new Date(date))} />,
   },
   {
     value: hoursToMilliseconds(24),
-    minRangeSize: hoursToMilliseconds(100),
+    // minRangeSize: hoursToMilliseconds(100),
     maxRangeSize: hoursToMilliseconds(12 * 24),
     render: () => <SpectimeLongTickLabel />,
   },
 
-  // When minimized/half screen
   {
     value: hoursToMilliseconds(12),
     minRangeSize: hoursToMilliseconds(12 * 24),
@@ -131,7 +145,6 @@ export const BASE_TIME_AXIS_MARKERS: MarkerDefinition[] = [
     maxRangeSize: hoursToMilliseconds(15 * 24),
     render: () => <SpectimeLongTickLabel />,
   },
-
   {
     value: hoursToMilliseconds(12),
     minRangeSize: hoursToMilliseconds(15 * 24),
@@ -165,7 +178,13 @@ export const TODAY_HIGHLIGHT_MARKER: SpectimeTimeHighlight[] = [
       start: addHours(startOfDay(NOW), 5).getTime(),
       end: subHours(endOfDay(NOW), 5).getTime(),
     },
-    minRangeSize: hoursToMilliseconds(100),
+    render: <SpectimePurpleLine />,
+  },
+  {
+    span: {
+      start: parseISO('2025-11-10').getTime(),
+      end: parseISO('2025-11-15').getTime(),
+    },
     render: <SpectimePurpleLine />,
   },
 ];

@@ -13,6 +13,7 @@ import { SpectimeSidebar } from '../SpectimeSidebar/spectimeSidebar';
 import { useVisibleTimelineItems } from '../../hooks/useVisibleTimelineItems/useVisibleTimelineItems';
 import { currentTimeAtom } from '../../currentTimeAtom';
 import { SpectimeCurrentTimeCursor } from '../SpectimeCurrentTimeCursor';
+import { RangeToolbar } from '../rangeToolBar/rangeToolbar';
 
 export interface TimelineProps {
   rows: RowDefinition[];
@@ -34,7 +35,7 @@ export const SpectimeTimeline = ({ rows, items }: TimelineProps) => {
   return (
     <SpectimeTimelineContainer>
       <SpectimeCurrentTimeCursor currentTimeAtom={currentTimeAtom} />
-      <SpectimeTimeAxis />
+      <SpectimeTimeAxis isWeekly={isWeekly} startElement={<RangeToolbar />} />
       <SpectimeRowsContainer>
         {rows.map((row) => (
           <SpectimeRow

@@ -7,17 +7,26 @@ import {
   BASE_TIME_AXIS_MARKERS,
   HOUR_AXIS_MARKERS,
   TODAY_HIGHLIGHT_MARKER,
+  WEEKLY_TIME_AXIS_MARKERS,
 } from './spectimeAxisItemDefinitions';
 import { getScaledTimeAxisMarkers } from './scaleBoundaries';
 import SpectimeTimeAxisHighlight from './SpectimeTimeAxisHighlight/SpectimeTimeAxisHighlight';
 
-export type SpectimeTimeAxisProps = Omit<TimeAxisProps, 'timeAxisMarkers'>;
+export type SpectimeTimeAxisProps = Omit<TimeAxisProps, 'timeAxisMarkers'> & { isWeekly: boolean };
 
-export const SpectimeTimeAxis: React.FC<SpectimeTimeAxisProps> = ({ classes, ...axisProps }) => {
+export const SpectimeTimeAxis: React.FC<SpectimeTimeAxisProps> = ({
+  classes,
+  isWeekly,
+  ...axisProps
+}) => {
   const { viewportWidth } = useTimelineContext();
   const timeAxisMarkers = useMemo(
-    () => getScaledTimeAxisMarkers(viewportWidth, BASE_TIME_AXIS_MARKERS),
-    [viewportWidth],
+    () =>
+      getScaledTimeAxisMarkers(
+        viewportWidth,
+        isWeekly ? WEEKLY_TIME_AXIS_MARKERS : BASE_TIME_AXIS_MARKERS,
+      ),
+    [isWeekly, viewportWidth],
   );
 
   return (
@@ -36,7 +45,7 @@ export const SpectimeTimeAxis: React.FC<SpectimeTimeAxisProps> = ({ classes, ...
         }}
       />
 
-      <SpectimeTimeAxisHighlight highlightMarkers={TODAY_HIGHLIGHT_MARKER} />
+      <SpectimeTimeAxisHighlight highlightMarkers={isWeekly ? TODAY_HIGHLIGHT_MARKER : []} />
     </>
   );
 };

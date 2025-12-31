@@ -17,13 +17,7 @@ export const SpectimeItem: React.FC<SpectimeItemProps> = ({ classes, children, .
         content: clsx(styles.content, classes?.content),
       }}
     >
-      <div
-        // onClick={{}
-
-        className={clsx(styles.innerContainer, classes?.innerContainer)}
-      >
-        {children}
-      </div>
+      <div className={clsx(styles.innerContainer, classes?.innerContainer)}>{children}</div>
     </Item>
   );
 };

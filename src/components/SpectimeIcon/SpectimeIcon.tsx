@@ -7,5 +7,5 @@ export interface SpectimeIconProps extends React.ImgHTMLAttributes<HTMLImageElem
 }
 
 export const SpectimeIcon: React.FC<SpectimeIconProps> = ({ ...imgProps }) => {
-  return <img className={styles.icon} alt={imgProps.alt} {...imgProps} />;
+  return <img className={styles.icon} alt={imgProps.alt} {...imgProps} draggable={false} />;
 };
