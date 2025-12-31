@@ -1,6 +1,6 @@
 # spectime
 
-`spectime` is an opinionated UI layer on top of `chronon-timeline`.
+`spectime` is an opinionated UI layer on top of my library  `chronon-timeline`.
 
 It doesn’t reimplement the timeline engine — you still use `chronon-timeline` for the core primitives (`Timeline`, `Row`, `Subrow`, `Item`), the data model (`Range`, `RowDefinition`, `ItemDefinition`), and state helpers like `useTimeline()`. `spectime` adds styling, convenience wrappers, and a small hook for turning a flat list of items into subrows (lanes).
 
