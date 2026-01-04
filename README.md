@@ -1,6 +1,17 @@
 # spectime
 
+<img width="1440" height="781" alt="Screenshot 2026-01-04 at 10 33 39" src="https://github.com/user-attachments/assets/6575ce2d-4fda-4036-a34f-49dd19900cef" />
+<img width="1440" height="778" alt="Screenshot 2026-01-04 at 10 33 49" src="https://github.com/user-attachments/assets/16928284-1c38-4ff9-a858-1eff496f9a11" />
+
 `spectime` is an opinionated UI layer on top of my library  `chronon-timeline`.
+
+
+## Interaction controls
+
+- Scroll (mouse wheel / trackpad) or drag the scrollbar to move vertically through rows.
+- Click + drag to pan left/right through time.
+- Hold `Ctrl` (or `⌘ Cmd` on macOS) and scroll over the timeline to zoom in/out.
+
 
 It doesn’t reimplement the timeline engine — you still use `chronon-timeline` for the core primitives (`Timeline`, `Row`, `Subrow`, `Item`), the data model (`Range`, `RowDefinition`, `ItemDefinition`), and state helpers like `useTimeline()` (re-exported as `useSpectimeTimeline()` from `spectime`). `spectime` adds styling, convenience wrappers, and a small hook for turning a flat list of items into subrows (lanes).
 
