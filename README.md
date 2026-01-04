@@ -5,6 +5,8 @@
 
 `spectime` is an opinionated UI layer on top of my library  `chronon-timeline`.
 
+It doesn’t reimplement the timeline engine — you still use `chronon-timeline` for the core primitives (`Timeline`, `Row`, `Subrow`, `Item`), the data model (`Range`, `RowDefinition`, `ItemDefinition`), and state helpers like `useTimeline()` (re-exported as `useSpectimeTimeline()` from `spectime`). `spectime` adds styling, convenience wrappers, and a small hook for turning a flat list of items into subrows (lanes).
+
 
 ## Interaction controls
 
@@ -13,7 +15,6 @@
 - Hold `Ctrl` (or `⌘ Cmd` on macOS) and scroll over the timeline to zoom in/out.
 
 
-It doesn’t reimplement the timeline engine — you still use `chronon-timeline` for the core primitives (`Timeline`, `Row`, `Subrow`, `Item`), the data model (`Range`, `RowDefinition`, `ItemDefinition`), and state helpers like `useTimeline()` (re-exported as `useSpectimeTimeline()` from `spectime`). `spectime` adds styling, convenience wrappers, and a small hook for turning a flat list of items into subrows (lanes).
 
 ## Composition pattern (how you build UIs with it)
 
