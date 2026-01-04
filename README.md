@@ -1,4 +1,4 @@
-# spectime
+# Spectime  gantt timeline
 
 <img width="1440" height="781" alt="Screenshot 2026-01-04 at 10 33 39" src="https://github.com/user-attachments/assets/6575ce2d-4fda-4036-a34f-49dd19900cef" />
 <img width="1440" height="778" alt="Screenshot 2026-01-04 at 10 33 49" src="https://github.com/user-attachments/assets/16928284-1c38-4ff9-a858-1eff496f9a11" />
