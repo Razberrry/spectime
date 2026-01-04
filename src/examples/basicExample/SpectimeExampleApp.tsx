@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { addHours, parseISO, subHours } from 'date-fns';
-import { generateItems, generateRows, Range, useTimeline } from 'chronon-timeline';
+import { generateItems, generateRows, Range } from 'chronon-timeline';
 
 import { SpectimeTimelineProvider } from '../../components/SpectimeTimelineProvider/SpectimeTimelineProvider';
 import { currentTimeAtom } from '../../currentTimeAtom';
+import { useSpectimeTimeline } from '../../hooks/useSpectimeTimeline';
 import { SpectimeTimelineExample } from '../spectimeTimelineExample/SpectimeTimelineExample';
 
 const DEFAULT_RANGE_HOUR: Range = {
@@ -24,7 +25,7 @@ const ITEMS = generateItems(
 
 export const SpectimeExampleApp = () => {
   const [range, setRange] = useState<Range>(DEFAULT_RANGE_HOUR);
-  const timelineAttributes = useTimeline({ range, setRange });
+  const timelineAttributes = useSpectimeTimeline({ range, setRange });
 
   return (
     <SpectimeTimelineProvider {...timelineAttributes} currentTimeAtom={currentTimeAtom}>

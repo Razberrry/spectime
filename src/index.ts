@@ -21,6 +21,7 @@ export * from './components/SpectimeTimeCursor/SpectimeTimeCursor';
 export * from './components/SpectimeTimelineContainer/SpectimeTimelineContainer';
 export * from './components/SpectimeTimelineProvider/SpectimeTimelineProvider';
 
+export * from './hooks/useSpectimeTimeline';
 export * from './hooks/useVisibleTimelineItems/useVisibleTimelineItems';
 export * from './hooks/useTimelineAutoPanUntilInteraction';
 

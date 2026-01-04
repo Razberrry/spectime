@@ -2,7 +2,7 @@
 
 `spectime` is an opinionated UI layer on top of my library  `chronon-timeline`.
 
-It doesn’t reimplement the timeline engine — you still use `chronon-timeline` for the core primitives (`Timeline`, `Row`, `Subrow`, `Item`), the data model (`Range`, `RowDefinition`, `ItemDefinition`), and state helpers like `useTimeline()`. `spectime` adds styling, convenience wrappers, and a small hook for turning a flat list of items into subrows (lanes).
+It doesn’t reimplement the timeline engine — you still use `chronon-timeline` for the core primitives (`Timeline`, `Row`, `Subrow`, `Item`), the data model (`Range`, `RowDefinition`, `ItemDefinition`), and state helpers like `useTimeline()` (re-exported as `useSpectimeTimeline()` from `spectime`). `spectime` adds styling, convenience wrappers, and a small hook for turning a flat list of items into subrows (lanes).
 
 ## Composition pattern (how you build UIs with it)
 
@@ -50,7 +50,8 @@ Common add-ons:
 - `SpectimeTimeCursor` / `SpectimeCurrentTimeCursor`: cursor components for rendering “now” or an arbitrary timestamp.
 
 Helpers/hooks:
-- `useVisibleTimelineItems`: groups items into non-overlapping lanes (subrows) for the current visible range.
+- `useSpectimeTimeline`: re-export of `chronon-timeline`’s `useTimeline()` hook (range + zoom state).
+- `useVisibleTimelineItems`: groups items into non-overlapping lanes (subrows) for the current visible range (must be used inside `SpectimeTimelineProvider`).
 - `currentTimeAtom`: a Jotai atom that ticks `Date.now()` every second (used by `SpectimeCurrentTimeCursor` and autopan).
 
 ## Basic usage
@@ -58,7 +59,6 @@ Helpers/hooks:
 ```tsx
 import { useState } from 'react';
 import type { ItemDefinition, Range, RowDefinition } from 'chronon-timeline';
-import { useTimeline } from 'chronon-timeline';
 
 import {
   SpectimeItem,
@@ -68,56 +68,70 @@ import {
   SpectimeTimelineContainer,
   SpectimeTimelineProvider,
   currentTimeAtom,
+  useSpectimeTimeline,
   useVisibleTimelineItems,
 } from 'spectime';
 
-export function MyTimeline({
+export const MyTimeline = ({
   rows,
   items,
 }: {
   rows: RowDefinition[];
   items: ItemDefinition[];
-}) {
-  const SUBROW_HEIGHT_PX = 60;
-
+}) => {
   const [range, setRange] = useState<Range>(() => {
     const now = Date.now();
     return { start: now - 60 * 60 * 1000, end: now + 60 * 60 * 1000 };
   });
 
-  const timeline = useTimeline({ range, setRange });
+  const timeline = useSpectimeTimeline({ range, setRange });
+
+  return (
+    <SpectimeTimelineProvider {...timeline} currentTimeAtom={currentTimeAtom}>
+      <TimelineContents rows={rows} items={items} />
+    </SpectimeTimelineProvider>
+  );
+};
+
+const TimelineContents = ({
+  rows,
+  items,
+}: {
+  rows: RowDefinition[];
+  items: ItemDefinition[];
+}) => {
+  const SUBROW_HEIGHT_PX = 60;
+
   const { subrowsByRow, rowIdWithMostVisibleLanes, isWeekly } = useVisibleTimelineItems({
     rows,
     items,
   });
 
   return (
-    <SpectimeTimelineProvider {...timeline} currentTimeAtom={currentTimeAtom}>
-      <SpectimeTimelineContainer>
-        <SpectimeTimeAxis isWeekly={isWeekly} />
+    <SpectimeTimelineContainer>
+      <SpectimeTimeAxis isWeekly={isWeekly} />
 
-        {rows.map((row) => (
-          <SpectimeRow
-            key={row.id}
-            {...row}
-            subrowHeight={SUBROW_HEIGHT_PX}
-            ignoreRefs={row.id !== rowIdWithMostVisibleLanes}
-          >
-            {(subrowsByRow[row.id] ?? []).map((lane, laneIndex) => (
-              <SpectimeSubrow key={`${row.id}-${laneIndex}`}>
-                {lane.map((item) => (
-                  <SpectimeItem key={item.id} id={item.id} span={item.span}>
-                    {String(item.id)}
-                  </SpectimeItem>
-                ))}
-              </SpectimeSubrow>
-            ))}
-          </SpectimeRow>
-        ))}
-      </SpectimeTimelineContainer>
-    </SpectimeTimelineProvider>
+      {rows.map((row) => (
+        <SpectimeRow
+          key={row.id}
+          {...row}
+          subrowHeight={SUBROW_HEIGHT_PX}
+          ignoreRefs={row.id !== rowIdWithMostVisibleLanes}
+        >
+          {(subrowsByRow[row.id] ?? []).map((lane, laneIndex) => (
+            <SpectimeSubrow key={`${row.id}-${laneIndex}`}>
+              {lane.map((item) => (
+                <SpectimeItem key={item.id} id={item.id} span={item.span}>
+                  {String(item.id)}
+                </SpectimeItem>
+              ))}
+            </SpectimeSubrow>
+          ))}
+        </SpectimeRow>
+      ))}
+    </SpectimeTimelineContainer>
   );
-}
+};
 ```
 
 Notes:
@@ -129,6 +143,7 @@ Notes:
 In `chronon-timeline`, each `Row` can contain multiple `Subrow`s. A subrow is effectively a “lane” used to display items that would otherwise overlap in time.
 
 `useVisibleTimelineItems({ rows, items })` is a convenience hook that:
+- Must be called from a component rendered inside `SpectimeTimelineProvider` (it reads the current `range` from timeline context).
 - Filters items to what intersects the current timeline range.
 - Groups items by `rowId` and packs them into the minimum number of non-overlapping lanes (subrows) so items in the same lane never overlap in time.
 - Exposes `isWeekly`, a boolean derived from the current visible range size, which is typically used to switch time-axis marker density and to optionally expand item spans to full-day blocks when zoomed out.
